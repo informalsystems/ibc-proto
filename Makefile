@@ -15,6 +15,6 @@ clean:
 
 publish:
 	cd ibc_proto && cargo publish --dry-run --allow-dirty
-	echo "Run: "cd ibc_proto && cargo publish" to really publish."
+	@echo "*** Run: 'cd ibc_proto && cargo publish' to really publish."
 
 .PHONY: clean build
