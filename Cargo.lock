@@ -79,13 +79,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "ibc-prost-compiler"
+version = "0.1.0"
+dependencies = [
+ "prost-build",
+ "walkdir",
+]
+
+[[package]]
 name = "ibc-proto"
 version = "0.1.0"
 dependencies = [
  "prost",
- "prost-build",
  "prost-types",
- "walkdir",
 ]
 
 [[package]]

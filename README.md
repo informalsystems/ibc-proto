@@ -7,7 +7,7 @@
 [![Apache 2.0 Licensed][license-image]][license-link]
 ![Rust 1.39+][rustc-image]
 
-Rust crate for interacting with
+Rust crate for interacting with Cosmos SDK
 [IBC structs](https://github.com/cosmos/cosmos-sdk/tree/master/proto/ibc).
 
 [Documentation][docs-link]

@@ -1,5 +1,6 @@
 [workspace]
 
 members = [
-    "ibc_proto"
+    "ibc_proto",
+    "ibc_prost_compiler"
 ]

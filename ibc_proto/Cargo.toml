@@ -19,7 +19,3 @@ all-features = true
 [dependencies]
 prost = { version = "0.6.1" }
 prost-types = { version = "0.6.1" }
-
-[build-dependencies]
-prost-build = { version = "0.6.1" }
-walkdir = { version = "2.3.1" }
