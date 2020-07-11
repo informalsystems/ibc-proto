@@ -36,10 +36,10 @@ limitations under the License.
 
 [//]: # (badges)
 
-[crate-image]: https://img.shields.io/crates/v/tendermint.svg
-[crate-link]: https://crates.io/crates/tendermint
-[docs-image]: https://docs.rs/tendermint/badge.svg
-[docs-link]: https://docs.rs/tendermint/
+[crate-image]: https://img.shields.io/crates/v/ibc-proto.svg
+[crate-link]: https://crates.io/crates/ibc-proto
+[docs-image]: https://docs.rs/ibc-proto/badge.svg
+[docs-link]: https://docs.rs/ibc-proto/
 [build-image]: https://github.com/informalsystems/ibc-proto/workflows/Rust/badge.svg
 [build-link]: https://github.com/informalsystems/ibc-proto/actions?query=workflow%3ARust
 [audit-image]: https://github.com/informalsystems/ibc-proto/workflows/Audit-Check/badge.svg
