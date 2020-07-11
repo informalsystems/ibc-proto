@@ -39,6 +39,9 @@ jobs:
           toolchain: stable
           components: clippy
           override: true
+      - name: Download Cosmos SDK
+        run: |
+          make cosmos-sdk
       - uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -52,6 +55,9 @@ jobs:
         with:
           toolchain: stable
           override: true
+      - name: Download Cosmos SDK
+        run: |
+          make cosmos-sdk
       - uses: actions-rs/cargo@v1
         with:
           command: build
