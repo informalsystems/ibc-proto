@@ -14,13 +14,38 @@
 #![doc(html_root_url = "https://docs.rs/ibc-proto/0.1.0")]
 
 mod cosmos {
-    include!("prost/cosmos.rs");
-    pub mod query {
-        include!("prost/cosmos.query.rs");
+    pub mod base {
+        pub mod v1beta1 {
+            include!("prost/cosmos.base.v1beta1.rs");
+        }
+        pub mod query {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.query.v1beta1.rs");
+            }
+        }
+        pub mod crypto {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.crypto.v1beta1.rs");
+            }
+        }
+    }
+    pub mod tx {
+        pub mod v1beta1 {
+            include!("prost/cosmos.tx.v1beta1.rs");
+        }
+        pub mod signing {
+            pub mod v1beta1 {
+                include!("prost/cosmos.tx.signing.v1beta1.rs");
+            }
+        }
     }
 }
 
 mod ibc {
+    pub mod client {
+        #![allow(missing_docs)]
+        include!("prost/ibc.client.rs");
+    }
     pub mod channel {
         #![allow(missing_docs)]
         include!("prost/ibc.channel.rs");
@@ -37,28 +62,38 @@ mod ibc {
         #![allow(missing_docs)]
         include!("prost/ibc.localhost.rs");
     }
+    pub mod tendermint {
+        #![allow(missing_docs)]
+        include!("prost/ibc.tendermint.rs");
+    }
     pub mod transfer {
         #![allow(missing_docs)]
         include!("prost/ibc.transfer.rs");
     }
+    pub mod types {
+        #![allow(missing_docs)]
+        include!("prost/ibc.types.rs");
+    }
+}
+
+mod ics23 {
+    include!("prost/ics23.rs");
 }
 
 mod tendermint {
-    pub mod abci {
-        #[allow(clippy::large_enum_variant)]
-        pub mod types {
-            include!("prost/tendermint.abci.types.rs");
-        }
-    }
     pub mod crypto {
-        pub mod merkle {
-            include!("prost/tendermint.crypto.merkle.rs");
-        }
+        include!("prost/tendermint.crypto.rs");
     }
     pub mod libs {
-        pub mod kv {
-            include!("prost/tendermint.libs.kv.rs");
+        pub mod bits {
+            include!("prost/tendermint.libs.bits.rs");
         }
+    }
+    pub mod types {
+        include!("prost/tendermint.types.rs");
+    }
+    pub mod version {
+        include!("prost/tendermint.version.rs");
     }
 }
 

@@ -3,7 +3,7 @@
 ///
 ///  message SomeRequest {
 ///          Foo some_parameter = 1;
-///          PageRequest page = 2;
+///          PageRequest pagination = 2;
 ///  }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PageRequest {
@@ -28,7 +28,7 @@ pub struct PageRequest {
     pub count_total: bool,
 }
 /// PageResponse is to be embedded in gRPC response messages where the corresponding
-/// request message has used PageRequest
+/// request message has used PageRequest.
 ///
 ///  message SomeResponse {
 ///          repeated Bar results = 1;
