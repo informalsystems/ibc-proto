@@ -1,5 +1,5 @@
-/// MsgChannelOpenInit defines an sdk.Msg to initialize a channel handshake. It is
-/// called by a relayer on Chain A.
+/// MsgChannelOpenInit defines an sdk.Msg to initialize a channel handshake. It
+/// is called by a relayer on Chain A.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenInit {
     #[prost(string, tag="1")]
@@ -47,8 +47,8 @@ pub struct MsgChannelOpenAck {
     #[prost(bytes, tag="6")]
     pub signer: std::vec::Vec<u8>,
 }
-/// MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain B to acknowledge
-/// the change of channel state to OPEN on Chain A.
+/// MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain B to
+/// acknowledge the change of channel state to OPEN on Chain A.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenConfirm {
     #[prost(string, tag="1")]
@@ -88,9 +88,9 @@ pub struct MsgChannelCloseConfirm {
     #[prost(bytes, tag="5")]
     pub signer: std::vec::Vec<u8>,
 }
-/// MsgPacket receives incoming IBC packet
+/// MsgRecvPacket receives incoming IBC packet
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgPacket {
+pub struct MsgRecvPacket {
     #[prost(message, optional, tag="1")]
     pub packet: ::std::option::Option<Packet>,
     #[prost(bytes, tag="2")]
@@ -114,6 +114,22 @@ pub struct MsgTimeout {
     #[prost(bytes, tag="5")]
     pub signer: std::vec::Vec<u8>,
 }
+/// MsgTimeoutOnClose timed-out packet upon counterparty channel closure.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgTimeoutOnClose {
+    #[prost(message, optional, tag="1")]
+    pub packet: ::std::option::Option<Packet>,
+    #[prost(bytes, tag="2")]
+    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes, tag="3")]
+    pub proof_close: std::vec::Vec<u8>,
+    #[prost(uint64, tag="4")]
+    pub proof_height: u64,
+    #[prost(uint64, tag="5")]
+    pub next_sequence_recv: u64,
+    #[prost(bytes, tag="6")]
+    pub signer: std::vec::Vec<u8>,
+}
 /// MsgAcknowledgement receives incoming IBC acknowledgement
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgAcknowledgement {
@@ -129,8 +145,8 @@ pub struct MsgAcknowledgement {
     pub signer: std::vec::Vec<u8>,
 }
 /// Channel defines pipeline for exactly-once packet delivery between specific
-/// modules on separate blockchains, which has at least one end capable of sending
-/// packets and one end capable of receiving packets.
+/// modules on separate blockchains, which has at least one end capable of
+/// sending packets and one end capable of receiving packets.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Channel {
     /// current state of the channel end
@@ -150,8 +166,8 @@ pub struct Channel {
     #[prost(string, tag="5")]
     pub version: std::string::String,
 }
-/// IdentifiedChannel defines a channel with additional port and channel identifier
-/// fields.
+/// IdentifiedChannel defines a channel with additional port and channel
+/// identifier fields.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IdentifiedChannel {
     /// current state of the channel end
@@ -248,7 +264,8 @@ pub enum State {
     /// A channel has completed the handshake. Open channels are
     /// ready to send and receive packets.
     Open = 3,
-    /// A channel has been closed and can no longer be used to send or receive packets.
+    /// A channel has been closed and can no longer be used to send or receive
+    /// packets.
     Closed = 4,
 }
 /// Order defines if a channel is ORDERED or UNORDERED
@@ -257,10 +274,38 @@ pub enum State {
 pub enum Order {
     /// zero-value for channel ordering
     NoneUnspecified = 0,
-    /// packets can be delivered in any order, which may differ from the order in which they were sent.
+    /// packets can be delivered in any order, which may differ from the order in
+    /// which they were sent.
     Unordered = 1,
     /// packets are delivered exactly in the order which they were sent
     Ordered = 2,
+}
+/// GenesisState defines the ibc channel submodule's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    #[prost(message, repeated, tag="1")]
+    pub channels: ::std::vec::Vec<IdentifiedChannel>,
+    #[prost(message, repeated, tag="2")]
+    pub acknowledgements: ::std::vec::Vec<PacketAckCommitment>,
+    #[prost(message, repeated, tag="3")]
+    pub commitments: ::std::vec::Vec<PacketAckCommitment>,
+    #[prost(message, repeated, tag="4")]
+    pub send_sequences: ::std::vec::Vec<PacketSequence>,
+    #[prost(message, repeated, tag="5")]
+    pub recv_sequences: ::std::vec::Vec<PacketSequence>,
+    #[prost(message, repeated, tag="6")]
+    pub ack_sequences: ::std::vec::Vec<PacketSequence>,
+}
+/// PacketSequence defines the genesis type necessary to retrieve and store
+/// next send and receive sequences.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PacketSequence {
+    #[prost(string, tag="1")]
+    pub port_id: std::string::String,
+    #[prost(string, tag="2")]
+    pub channel_id: std::string::String,
+    #[prost(uint64, tag="3")]
+    pub sequence: u64,
 }
 /// QueryChannelRequest is the request type for the Query/Channel RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -295,7 +340,7 @@ pub struct QueryChannelResponse {
 pub struct QueryChannelsRequest {
     /// pagination request
     #[prost(message, optional, tag="1")]
-    pub req: ::std::option::Option<super::super::cosmos::query::PageRequest>,
+    pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryChannelsResponse is the response type for the Query/Channels RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -305,12 +350,13 @@ pub struct QueryChannelsResponse {
     pub channels: ::std::vec::Vec<IdentifiedChannel>,
     /// pagination response
     #[prost(message, optional, tag="2")]
-    pub res: ::std::option::Option<super::super::cosmos::query::PageResponse>,
+    pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
     #[prost(int64, tag="3")]
     pub height: i64,
 }
-/// QueryConnectionChannelsRequest is the request type for the Query/QueryConnectionChannels RPC method
+/// QueryConnectionChannelsRequest is the request type for the
+/// Query/QueryConnectionChannels RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionChannelsRequest {
     /// connection unique identifier
@@ -318,9 +364,10 @@ pub struct QueryConnectionChannelsRequest {
     pub connection: std::string::String,
     /// pagination request
     #[prost(message, optional, tag="2")]
-    pub req: ::std::option::Option<super::super::cosmos::query::PageRequest>,
+    pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
-/// QueryConnectionChannelsResponse is the Response type for the Query/QueryConnectionChannels RPC method
+/// QueryConnectionChannelsResponse is the Response type for the
+/// Query/QueryConnectionChannels RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionChannelsResponse {
     /// list of channels associated with a connection.
@@ -328,12 +375,75 @@ pub struct QueryConnectionChannelsResponse {
     pub channels: ::std::vec::Vec<IdentifiedChannel>,
     /// pagination response
     #[prost(message, optional, tag="2")]
-    pub res: ::std::option::Option<super::super::cosmos::query::PageResponse>,
+    pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
     #[prost(int64, tag="3")]
     pub height: i64,
 }
-/// QueryPacketCommitmentRequest is the request type for the Query/PacketCommitment RPC method
+/// QueryChannelClientStateRequest is the request type for the Query/ClientState
+/// RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryChannelClientStateRequest {
+    /// port unique identifier
+    #[prost(string, tag="1")]
+    pub port_id: std::string::String,
+    /// channel unique identifier
+    #[prost(string, tag="2")]
+    pub channel_id: std::string::String,
+}
+/// QueryChannelClientStateResponse is the Response type for the
+/// Query/QueryChannelClientState RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryChannelClientStateResponse {
+    /// client state associated with the channel
+    #[prost(message, optional, tag="1")]
+    pub identified_client_state: ::std::option::Option<super::client::IdentifiedClientState>,
+    /// merkle proof of existence
+    #[prost(bytes, tag="2")]
+    pub proof: std::vec::Vec<u8>,
+    /// merkle proof path
+    #[prost(string, tag="3")]
+    pub proof_path: std::string::String,
+    /// height at which the proof was retrieved
+    #[prost(uint64, tag="4")]
+    pub proof_height: u64,
+}
+/// QueryChannelConsensusStateRequest is the request type for the
+/// Query/ConsensusState RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryChannelConsensusStateRequest {
+    /// port unique identifier
+    #[prost(string, tag="1")]
+    pub port_id: std::string::String,
+    /// channel unique identifier
+    #[prost(string, tag="2")]
+    pub channel_id: std::string::String,
+    /// height of the consensus state
+    #[prost(uint64, tag="3")]
+    pub height: u64,
+}
+/// QueryChannelClientStateResponse is the Response type for the
+/// Query/QueryChannelClientState RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryChannelConsensusStateResponse {
+    /// consensus state associated with the channel
+    #[prost(message, optional, tag="1")]
+    pub consensus_state: ::std::option::Option<::prost_types::Any>,
+    /// client ID associated with the consensus state
+    #[prost(string, tag="2")]
+    pub client_id: std::string::String,
+    /// merkle proof of existence
+    #[prost(bytes, tag="3")]
+    pub proof: std::vec::Vec<u8>,
+    /// merkle proof path
+    #[prost(string, tag="4")]
+    pub proof_path: std::string::String,
+    /// height at which the proof was retrieved
+    #[prost(uint64, tag="5")]
+    pub proof_height: u64,
+}
+/// QueryPacketCommitmentRequest is the request type for the
+/// Query/PacketCommitment RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketCommitmentRequest {
     /// port unique identifier
@@ -346,8 +456,9 @@ pub struct QueryPacketCommitmentRequest {
     #[prost(uint64, tag="3")]
     pub sequence: u64,
 }
-/// QueryPacketCommitmentResponse defines the client query response for a packet which also
-/// includes a proof, its path and the height form which the proof was retrieved
+/// QueryPacketCommitmentResponse defines the client query response for a packet
+/// which also includes a proof, its path and the height form which the proof was
+/// retrieved
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketCommitmentResponse {
     /// packet associated with the request fields
@@ -363,7 +474,8 @@ pub struct QueryPacketCommitmentResponse {
     #[prost(uint64, tag="4")]
     pub proof_height: u64,
 }
-/// QueryPacketCommitmentsRequest is the request type for the Query/QueryPacketCommitments RPC method
+/// QueryPacketCommitmentsRequest is the request type for the
+/// Query/QueryPacketCommitments RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketCommitmentsRequest {
     /// port unique identifier
@@ -374,21 +486,55 @@ pub struct QueryPacketCommitmentsRequest {
     pub channel_id: std::string::String,
     /// pagination request
     #[prost(message, optional, tag="3")]
-    pub req: ::std::option::Option<super::super::cosmos::query::PageRequest>,
+    pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
-/// QueryPacketCommitmentsResponse is the request type for the Query/QueryPacketCommitments RPC method
+/// QueryPacketCommitmentsResponse is the request type for the
+/// Query/QueryPacketCommitments RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketCommitmentsResponse {
     #[prost(message, repeated, tag="1")]
     pub commitments: ::std::vec::Vec<PacketAckCommitment>,
     /// pagination response
     #[prost(message, optional, tag="2")]
-    pub res: ::std::option::Option<super::super::cosmos::query::PageResponse>,
+    pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
     #[prost(int64, tag="3")]
     pub height: i64,
 }
-/// QueryUnrelayedPacketsRequest is the request type for the Query/QueryConnectionChannels RPC method
+/// QueryPacketAcknowledgementRequest is the request type for the
+/// Query/PacketAcknowledgement RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryPacketAcknowledgementRequest {
+    /// port unique identifier
+    #[prost(string, tag="1")]
+    pub port_id: std::string::String,
+    /// channel unique identifier
+    #[prost(string, tag="2")]
+    pub channel_id: std::string::String,
+    /// packet sequence
+    #[prost(uint64, tag="3")]
+    pub sequence: u64,
+}
+/// QueryPacketAcknowledgementResponse defines the client query response for a
+/// packet which also includes a proof, its path and the height form which the
+/// proof was retrieved
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryPacketAcknowledgementResponse {
+    /// packet associated with the request fields
+    #[prost(bytes, tag="1")]
+    pub acknowledgement: std::vec::Vec<u8>,
+    /// merkle proof of existence
+    #[prost(bytes, tag="2")]
+    pub proof: std::vec::Vec<u8>,
+    /// merkle proof path
+    #[prost(string, tag="3")]
+    pub proof_path: std::string::String,
+    /// height at which the proof was retrieved
+    #[prost(uint64, tag="4")]
+    pub proof_height: u64,
+}
+/// QueryUnrelayedPacketsRequest is the request type for the
+/// Query/UnrelayedPackets RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUnrelayedPacketsRequest {
     /// port unique identifier
@@ -399,25 +545,25 @@ pub struct QueryUnrelayedPacketsRequest {
     pub channel_id: std::string::String,
     /// list of packet sequences
     #[prost(uint64, repeated, tag="3")]
-    pub sequences: ::std::vec::Vec<u64>,
-    /// pagination request
-    #[prost(message, optional, tag="4")]
-    pub req: ::std::option::Option<super::super::cosmos::query::PageRequest>,
+    pub packet_commitment_sequences: ::std::vec::Vec<u64>,
+    /// flag indicating if the return value is packet commitments or
+    /// acknowledgements
+    #[prost(bool, tag="4")]
+    pub acknowledgements: bool,
 }
-/// QueryUnrelayedPacketsResponse is the request type for the Query/QueryConnectionChannels RPC method
+/// QueryUnrelayedPacketsResponse is the request type for the
+/// Query/UnrelayedPacketCommitments RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUnrelayedPacketsResponse {
-    /// list of unrelayed packets sequences
+    /// list of unrelayed packet sequences
     #[prost(uint64, repeated, tag="1")]
-    pub packets: ::std::vec::Vec<u64>,
-    /// pagination response
-    #[prost(message, optional, tag="2")]
-    pub res: ::std::option::Option<super::super::cosmos::query::PageResponse>,
+    pub sequences: ::std::vec::Vec<u64>,
     /// query block height
-    #[prost(int64, tag="3")]
+    #[prost(int64, tag="2")]
     pub height: i64,
 }
-/// QueryNextSequenceReceiveRequest is the request type for the Query/QueryNextSequenceReceiveRequest RPC method
+/// QueryNextSequenceReceiveRequest is the request type for the
+/// Query/QueryNextSequenceReceiveRequest RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNextSequenceReceiveRequest {
     /// port unique identifier
@@ -427,7 +573,8 @@ pub struct QueryNextSequenceReceiveRequest {
     #[prost(string, tag="2")]
     pub channel_id: std::string::String,
 }
-/// QuerySequenceResponse is the request type for the Query/QueryNextSequenceReceiveResponse RPC method
+/// QuerySequenceResponse is the request type for the
+/// Query/QueryNextSequenceReceiveResponse RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNextSequenceReceiveResponse {
     /// next sequence receive number
@@ -442,14 +589,4 @@ pub struct QueryNextSequenceReceiveResponse {
     /// height at which the proof was retrieved
     #[prost(uint64, tag="4")]
     pub proof_height: u64,
-}
-/// QueryChannelClientStateRequest is the request type for the Query/ClientState RPC method
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryChannelClientStateRequest {
-    /// port unique identifier
-    #[prost(string, tag="1")]
-    pub port_id: std::string::String,
-    /// channel unique identifier
-    #[prost(string, tag="2")]
-    pub channel_id: std::string::String,
 }

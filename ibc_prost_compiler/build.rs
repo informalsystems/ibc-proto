@@ -5,7 +5,7 @@ use walkdir::WalkDir;
 
 fn main() {
     // Paths
-    let proto_paths = ["../cosmos-sdk/proto/ibc"];
+    let proto_paths = ["../cosmos-sdk/proto/ibc", "../cosmos-sdk/proto/cosmos/tx"];
     let proto_includes_paths = ["../cosmos-sdk/proto", "../cosmos-sdk/third_party/proto"];
 
     // List available proto files
