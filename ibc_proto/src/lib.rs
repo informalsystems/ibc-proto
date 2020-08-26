@@ -5,7 +5,7 @@
 
 #![deny(
     warnings,
-    missing_docs,
+    // missing_docs,
     trivial_casts,
     trivial_numeric_casts,
     unused_import_braces
@@ -43,35 +43,27 @@ mod cosmos {
 
 mod ibc {
     pub mod client {
-        #![allow(missing_docs)]
         include!("prost/ibc.client.rs");
     }
     pub mod channel {
-        #![allow(missing_docs)]
         include!("prost/ibc.channel.rs");
     }
     pub mod commitment {
-        #![allow(missing_docs)]
         include!("prost/ibc.commitment.rs");
     }
     pub mod connection {
-        #![allow(missing_docs)]
         include!("prost/ibc.connection.rs");
     }
     pub mod localhost {
-        #![allow(missing_docs)]
         include!("prost/ibc.localhost.rs");
     }
     pub mod tendermint {
-        #![allow(missing_docs)]
         include!("prost/ibc.tendermint.rs");
     }
     pub mod transfer {
-        #![allow(missing_docs)]
         include!("prost/ibc.transfer.rs");
     }
     pub mod types {
-        #![allow(missing_docs)]
         include!("prost/ibc.types.rs");
     }
 }
@@ -97,4 +89,7 @@ mod tendermint {
     }
 }
 
+pub use cosmos::*;
 pub use ibc::*;
+pub use ics23::*;
+pub use tendermint::*;
