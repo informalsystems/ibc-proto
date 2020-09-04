@@ -10,6 +10,7 @@
     trivial_numeric_casts,
     unused_import_braces
 )]
+#![allow(clippy::large_enum_variant)]
 #![forbid(unsafe_code)]
 #![doc(html_root_url = "https://docs.rs/ibc-proto/0.1.0")]
 
