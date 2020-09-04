@@ -25,8 +25,8 @@ pub struct MsgConnectionOpenTry {
     pub counterparty: ::std::option::Option<Counterparty>,
     #[prost(string, repeated, tag="5")]
     pub counterparty_versions: ::std::vec::Vec<std::string::String>,
-    #[prost(uint64, tag="6")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="6")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     /// proof of the initialization the connection on Chain A: `UNITIALIZED ->
     /// INIT`
     #[prost(bytes, tag="7")]
@@ -37,8 +37,8 @@ pub struct MsgConnectionOpenTry {
     /// proof of client consensus state
     #[prost(bytes, tag="9")]
     pub proof_consensus: std::vec::Vec<u8>,
-    #[prost(uint64, tag="10")]
-    pub consensus_height: u64,
+    #[prost(message, optional, tag="10")]
+    pub consensus_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="11")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -52,8 +52,8 @@ pub struct MsgConnectionOpenAck {
     pub version: std::string::String,
     #[prost(message, optional, tag="3")]
     pub client_state: ::std::option::Option<::prost_types::Any>,
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     /// proof of the initialization the connection on Chain B: `UNITIALIZED ->
     /// TRYOPEN`
     #[prost(bytes, tag="5")]
@@ -64,8 +64,8 @@ pub struct MsgConnectionOpenAck {
     /// proof of client consensus state
     #[prost(bytes, tag="7")]
     pub proof_consensus: std::vec::Vec<u8>,
-    #[prost(uint64, tag="8")]
-    pub consensus_height: u64,
+    #[prost(message, optional, tag="8")]
+    pub consensus_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="9")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -78,8 +78,8 @@ pub struct MsgConnectionOpenConfirm {
     /// proof for the change of the connection state on Chain A: `INIT -> OPEN`
     #[prost(bytes, tag="2")]
     pub proof_ack: std::vec::Vec<u8>,
-    #[prost(uint64, tag="3")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="3")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="4")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -215,8 +215,8 @@ pub struct QueryConnectionResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryConnectionsRequest is the request type for the Query/Connections RPC
 /// method
@@ -236,8 +236,8 @@ pub struct QueryConnectionsResponse {
     #[prost(message, optional, tag="2")]
     pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
-    #[prost(int64, tag="3")]
-    pub height: i64,
+    #[prost(message, optional, tag="3")]
+    pub height: ::std::option::Option<super::client::Height>,
 }
 /// QueryClientConnectionsRequest is the request type for the
 /// Query/ClientConnections RPC method
@@ -261,8 +261,8 @@ pub struct QueryClientConnectionsResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was generated
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryConnectionClientStateRequest is the request type for the
 /// Query/ConnectionClientState RPC method
@@ -286,8 +286,8 @@ pub struct QueryConnectionClientStateResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryConnectionConsensusStateRequest is the request type for the
 /// Query/ConnectionConsensusState RPC method
@@ -297,7 +297,9 @@ pub struct QueryConnectionConsensusStateRequest {
     #[prost(string, tag="1")]
     pub connection_id: std::string::String,
     #[prost(uint64, tag="2")]
-    pub height: u64,
+    pub epoch_number: u64,
+    #[prost(uint64, tag="3")]
+    pub epoch_height: u64,
 }
 /// QueryConnectionConsensusStateResponse is the response type for the
 /// Query/ConnectionConsensusState RPC method
@@ -316,6 +318,6 @@ pub struct QueryConnectionConsensusStateResponse {
     #[prost(string, tag="4")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="5")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="5")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }

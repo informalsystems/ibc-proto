@@ -20,8 +20,8 @@ pub struct MsgTransfer {
     pub receiver: std::string::String,
     /// Timeout height relative to the current block height.
     /// The timeout is disabled when set to 0.
-    #[prost(uint64, tag="6")]
-    pub timeout_height: u64,
+    #[prost(message, optional, tag="6")]
+    pub timeout_height: ::std::option::Option<super::client::Height>,
     /// Timeout timestamp (in nanoseconds) relative to the current block timestamp.
     /// The timeout is disabled when set to 0.
     #[prost(uint64, tag="7")]

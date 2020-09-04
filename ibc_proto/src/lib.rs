@@ -18,14 +18,39 @@ mod cosmos {
         pub mod v1beta1 {
             include!("prost/cosmos.base.v1beta1.rs");
         }
-        pub mod query {
+        pub mod abci {
             pub mod v1beta1 {
-                include!("prost/cosmos.base.query.v1beta1.rs");
+                include!("prost/cosmos.base.abci.v1beta1.rs");
             }
         }
         pub mod crypto {
             pub mod v1beta1 {
                 include!("prost/cosmos.base.crypto.v1beta1.rs");
+            }
+        }
+        pub mod kv {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.kv.v1beta1.rs");
+            }
+        }
+        pub mod query {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.query.v1beta1.rs");
+            }
+        }
+        pub mod reflection {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.reflection.v1beta1.rs");
+            }
+        }
+        pub mod simulate {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.simulate.v1beta1.rs");
+            }
+        }
+        pub mod store {
+            pub mod v1beta1 {
+                include!("prost/cosmos.base.store.v1beta1.rs");
             }
         }
     }
@@ -73,6 +98,9 @@ mod ics23 {
 }
 
 mod tendermint {
+    pub mod abci {
+        include!("prost/tendermint.abci.rs");
+    }
     pub mod crypto {
         include!("prost/tendermint.crypto.rs");
     }
