@@ -6,12 +6,12 @@ cosmos-sdk:
 	@git clone --depth 1 https://github.com/cosmos/cosmos-sdk --branch "$(SDK_BRANCH)"
 
 build: cosmos-sdk
-	cargo clean
 	cargo run --bin ibc-prost-compiler
 	cargo build --lib
 
 clean:
 	rm -rf cosmos-sdk target
+	cargo clean
 
 publish:
 	cd ibc_proto && cargo publish --dry-run --allow-dirty
