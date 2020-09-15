@@ -92,6 +92,9 @@ pub mod ibc {
     pub mod types {
         include!("prost/ibc.types.rs");
     }
+    pub mod mock {
+        include!("prost/ibc.mock.rs");
+    }
 }
 
 pub mod ics23 {
