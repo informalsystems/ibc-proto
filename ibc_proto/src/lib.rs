@@ -14,7 +14,7 @@
 #![forbid(unsafe_code)]
 #![doc(html_root_url = "https://docs.rs/ibc-proto/0.1.0")]
 
-mod cosmos {
+pub mod cosmos {
     pub mod base {
         pub mod v1beta1 {
             include!("prost/cosmos.base.v1beta1.rs");
@@ -67,7 +67,7 @@ mod cosmos {
     }
 }
 
-mod ibc {
+pub mod ibc {
     pub mod client {
         include!("prost/ibc.client.rs");
     }
@@ -94,11 +94,11 @@ mod ibc {
     }
 }
 
-mod ics23 {
+pub mod ics23 {
     include!("prost/ics23.rs");
 }
 
-mod tendermint {
+pub mod tendermint {
     pub mod abci {
         include!("prost/tendermint.abci.rs");
     }
@@ -117,8 +117,3 @@ mod tendermint {
         include!("prost/tendermint.version.rs");
     }
 }
-
-pub use cosmos::*;
-pub use ibc::*;
-pub use ics23::*;
-pub use tendermint::*;
