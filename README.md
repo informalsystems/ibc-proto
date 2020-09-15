@@ -16,7 +16,27 @@ Rust crate for interacting with Cosmos SDK
 
 - Rust 1.39+
 - make, curl
-- Cosmos SDK (downloaded automatically if you are using `make`)
+
+## Build instructions
+
+1. Clone the repository:
+
+  ```bash
+  $ git clone https://github.com/informalsystems/ibc-proto
+  ```
+
+2. Update the Cosmos SDK submodule
+
+  ```bash
+  $ make update
+  ```
+
+3. Build the library
+
+  ```bash
+  $ make build
+  ```
+
 
 ## License
 
