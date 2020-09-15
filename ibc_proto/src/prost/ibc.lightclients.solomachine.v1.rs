@@ -31,10 +31,10 @@ pub struct Header {
     #[prost(message, optional, tag="3")]
     pub new_public_key: ::std::option::Option<super::super::super::super::cosmos::base::crypto::v1beta1::PublicKey>,
 }
-/// Evidence defines evidence of misbehaviour for a solo machine which consists
+/// Misbehaviour defines misbehaviour for a solo machine which consists
 /// of a sequence and two signatures over different messages at that sequence.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Evidence {
+pub struct Misbehaviour {
     #[prost(string, tag="1")]
     pub client_id: std::string::String,
     #[prost(uint64, tag="2")]
@@ -61,29 +61,4 @@ pub struct TimestampedSignature {
     pub signature: std::vec::Vec<u8>,
     #[prost(uint64, tag="2")]
     pub timestamp: u64,
-}
-/// MsgCreateClient defines a message to create an IBC client
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateClient {
-    #[prost(string, tag="1")]
-    pub client_id: std::string::String,
-    #[prost(message, optional, tag="2")]
-    pub consensus_state: ::std::option::Option<ConsensusState>,
-}
-/// MsgUpdateClient defines a message to update an IBC client
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateClient {
-    #[prost(string, tag="1")]
-    pub client_id: std::string::String,
-    #[prost(message, optional, tag="2")]
-    pub header: ::std::option::Option<Header>,
-}
-/// MsgSubmitClientMisbehaviour defines an sdk.Msg type that supports submitting
-/// arbitrary Evidence.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSubmitClientMisbehaviour {
-    #[prost(bytes, tag="1")]
-    pub submitter: std::vec::Vec<u8>,
-    #[prost(message, optional, tag="2")]
-    pub evidence: ::std::option::Option<Evidence>,
 }
