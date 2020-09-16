@@ -15,18 +15,20 @@ fn main() {
 fn compile_protos(out_dir: impl AsRef<Path>) {
     println!("[info ] Compiling .proto files to Rust...");
 
+    let root = env!("CARGO_MANIFEST_DIR");
+
     // Paths
     let proto_paths = [
-        "../proto/mock",
-        "../cosmos-sdk/proto/ibc",
-        "../cosmos-sdk/proto/cosmos/tx",
-        "../cosmos-sdk/proto/cosmos/base",
+        format!("{}/../proto/mock", root),
+        format!("{}/../cosmos-sdk/proto/ibc", root),
+        format!("{}/../cosmos-sdk/proto/cosmos/tx", root),
+        format!("{}/../cosmos-sdk/proto/cosmos/base", root),
     ];
 
     let proto_includes_paths = [
-        "../proto",
-        "../cosmos-sdk/proto",
-        "../cosmos-sdk/third_party/proto",
+        format!("{}/../proto", root),
+        format!("{}/../cosmos-sdk/proto", root),
+        format!("{}/../cosmos-sdk/third_party/proto", root),
     ];
 
     // List available proto files
