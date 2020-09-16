@@ -16,8 +16,18 @@ fn compile_protos(out_dir: impl AsRef<Path>) {
     println!("[info ] Compiling .proto files to Rust...");
 
     // Paths
-    let proto_paths = ["cosmos-sdk/proto/ibc", "cosmos-sdk/proto/cosmos/tx"];
-    let proto_includes_paths = ["cosmos-sdk/proto", "cosmos-sdk/third_party/proto"];
+    let proto_paths = [
+        "../proto/mock",
+        "../cosmos-sdk/proto/ibc",
+        "../cosmos-sdk/proto/cosmos/tx",
+        "../cosmos-sdk/proto/cosmos/base",
+    ];
+
+    let proto_includes_paths = [
+        "../proto",
+        "../cosmos-sdk/proto",
+        "../cosmos-sdk/third_party/proto",
+    ];
 
     // List available proto files
     let mut protos: Vec<PathBuf> = vec![];

@@ -25,8 +25,8 @@ pub struct MsgChannelOpenTry {
     pub counterparty_version: std::string::String,
     #[prost(bytes, tag="5")]
     pub proof_init: std::vec::Vec<u8>,
-    #[prost(uint64, tag="6")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="6")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="7")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -42,8 +42,8 @@ pub struct MsgChannelOpenAck {
     pub counterparty_version: std::string::String,
     #[prost(bytes, tag="4")]
     pub proof_try: std::vec::Vec<u8>,
-    #[prost(uint64, tag="5")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="5")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="6")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -57,8 +57,8 @@ pub struct MsgChannelOpenConfirm {
     pub channel_id: std::string::String,
     #[prost(bytes, tag="3")]
     pub proof_ack: std::vec::Vec<u8>,
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="5")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -83,8 +83,8 @@ pub struct MsgChannelCloseConfirm {
     pub channel_id: std::string::String,
     #[prost(bytes, tag="3")]
     pub proof_init: std::vec::Vec<u8>,
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="5")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -95,8 +95,8 @@ pub struct MsgRecvPacket {
     pub packet: ::std::option::Option<Packet>,
     #[prost(bytes, tag="2")]
     pub proof: std::vec::Vec<u8>,
-    #[prost(uint64, tag="3")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="3")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="4")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -107,8 +107,8 @@ pub struct MsgTimeout {
     pub packet: ::std::option::Option<Packet>,
     #[prost(bytes, tag="2")]
     pub proof: std::vec::Vec<u8>,
-    #[prost(uint64, tag="3")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="3")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(uint64, tag="4")]
     pub next_sequence_recv: u64,
     #[prost(bytes, tag="5")]
@@ -123,8 +123,8 @@ pub struct MsgTimeoutOnClose {
     pub proof: std::vec::Vec<u8>,
     #[prost(bytes, tag="3")]
     pub proof_close: std::vec::Vec<u8>,
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(uint64, tag="5")]
     pub next_sequence_recv: u64,
     #[prost(bytes, tag="6")]
@@ -139,8 +139,8 @@ pub struct MsgAcknowledgement {
     pub acknowledgement: std::vec::Vec<u8>,
     #[prost(bytes, tag="3")]
     pub proof: std::vec::Vec<u8>,
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="5")]
     pub signer: std::vec::Vec<u8>,
 }
@@ -227,8 +227,8 @@ pub struct Packet {
     #[prost(bytes, tag="6")]
     pub data: std::vec::Vec<u8>,
     /// block height after which the packet times out
-    #[prost(uint64, tag="7")]
-    pub timeout_height: u64,
+    #[prost(message, optional, tag="7")]
+    pub timeout_height: ::std::option::Option<super::client::Height>,
     /// block timestamp (in nanoseconds) after which the packet times out
     #[prost(uint64, tag="8")]
     pub timeout_timestamp: u64,
@@ -332,8 +332,8 @@ pub struct QueryChannelResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryChannelsRequest is the request type for the Query/Channels RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -352,8 +352,8 @@ pub struct QueryChannelsResponse {
     #[prost(message, optional, tag="2")]
     pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
-    #[prost(int64, tag="3")]
-    pub height: i64,
+    #[prost(message, optional, tag="3")]
+    pub height: ::std::option::Option<super::client::Height>,
 }
 /// QueryConnectionChannelsRequest is the request type for the
 /// Query/QueryConnectionChannels RPC method
@@ -377,8 +377,8 @@ pub struct QueryConnectionChannelsResponse {
     #[prost(message, optional, tag="2")]
     pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
-    #[prost(int64, tag="3")]
-    pub height: i64,
+    #[prost(message, optional, tag="3")]
+    pub height: ::std::option::Option<super::client::Height>,
 }
 /// QueryChannelClientStateRequest is the request type for the Query/ClientState
 /// RPC method
@@ -405,8 +405,8 @@ pub struct QueryChannelClientStateResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryChannelConsensusStateRequest is the request type for the
 /// Query/ConsensusState RPC method
@@ -418,9 +418,12 @@ pub struct QueryChannelConsensusStateRequest {
     /// channel unique identifier
     #[prost(string, tag="2")]
     pub channel_id: std::string::String,
-    /// height of the consensus state
+    /// epoch number of the consensus state
     #[prost(uint64, tag="3")]
-    pub height: u64,
+    pub epoch_number: u64,
+    /// epoch height of the consensus state
+    #[prost(uint64, tag="4")]
+    pub epoch_height: u64,
 }
 /// QueryChannelClientStateResponse is the Response type for the
 /// Query/QueryChannelClientState RPC method
@@ -439,8 +442,8 @@ pub struct QueryChannelConsensusStateResponse {
     #[prost(string, tag="4")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="5")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="5")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryPacketCommitmentRequest is the request type for the
 /// Query/PacketCommitment RPC method
@@ -471,8 +474,8 @@ pub struct QueryPacketCommitmentResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryPacketCommitmentsRequest is the request type for the
 /// Query/QueryPacketCommitments RPC method
@@ -498,8 +501,8 @@ pub struct QueryPacketCommitmentsResponse {
     #[prost(message, optional, tag="2")]
     pub pagination: ::std::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
     /// query block height
-    #[prost(int64, tag="3")]
-    pub height: i64,
+    #[prost(message, optional, tag="3")]
+    pub height: ::std::option::Option<super::client::Height>,
 }
 /// QueryPacketAcknowledgementRequest is the request type for the
 /// Query/PacketAcknowledgement RPC method
@@ -530,8 +533,8 @@ pub struct QueryPacketAcknowledgementResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }
 /// QueryUnrelayedPacketsRequest is the request type for the
 /// Query/UnrelayedPackets RPC method
@@ -559,8 +562,8 @@ pub struct QueryUnrelayedPacketsResponse {
     #[prost(uint64, repeated, tag="1")]
     pub sequences: ::std::vec::Vec<u64>,
     /// query block height
-    #[prost(int64, tag="2")]
-    pub height: i64,
+    #[prost(message, optional, tag="2")]
+    pub height: ::std::option::Option<super::client::Height>,
 }
 /// QueryNextSequenceReceiveRequest is the request type for the
 /// Query/QueryNextSequenceReceiveRequest RPC method
@@ -587,6 +590,6 @@ pub struct QueryNextSequenceReceiveResponse {
     #[prost(string, tag="3")]
     pub proof_path: std::string::String,
     /// height at which the proof was retrieved
-    #[prost(uint64, tag="4")]
-    pub proof_height: u64,
+    #[prost(message, optional, tag="4")]
+    pub proof_height: ::std::option::Option<super::client::Height>,
 }

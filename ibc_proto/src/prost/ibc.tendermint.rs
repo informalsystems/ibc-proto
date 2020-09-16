@@ -17,11 +17,11 @@ pub struct ClientState {
     #[prost(message, optional, tag="5")]
     pub max_clock_drift: ::std::option::Option<::prost_types::Duration>,
     /// Block height when the client was frozen due to a misbehaviour
-    #[prost(uint64, tag="6")]
-    pub frozen_height: u64,
+    #[prost(message, optional, tag="6")]
+    pub frozen_height: ::std::option::Option<super::client::Height>,
     /// Latest height the client was updated to
-    #[prost(uint64, tag="7")]
-    pub latest_height: u64,
+    #[prost(message, optional, tag="7")]
+    pub latest_height: ::std::option::Option<super::client::Height>,
     /// Proof specifications used in verifying counterparty state
     #[prost(message, repeated, tag="8")]
     pub proof_specs: ::std::vec::Vec<super::super::ics23::ProofSpec>,
@@ -37,15 +37,15 @@ pub struct ConsensusState {
     #[prost(message, optional, tag="2")]
     pub root: ::std::option::Option<super::commitment::MerkleRoot>,
     /// height at which the consensus state was stored.
-    #[prost(uint64, tag="3")]
-    pub height: u64,
+    #[prost(message, optional, tag="3")]
+    pub height: ::std::option::Option<super::client::Height>,
     #[prost(bytes, tag="4")]
     pub next_validators_hash: std::vec::Vec<u8>,
 }
-/// Evidence is a wrapper over two conflicting Headers
-/// that implements Evidence interface expected by ICS-02
+/// Misbehaviour is a wrapper over two conflicting Headers
+/// that implements Misbehaviour interface expected by ICS-02
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Evidence {
+pub struct Misbehaviour {
     #[prost(string, tag="1")]
     pub client_id: std::string::String,
     #[prost(string, tag="2")]
@@ -73,8 +73,8 @@ pub struct Header {
     pub signed_header: ::std::option::Option<super::super::tendermint::types::SignedHeader>,
     #[prost(message, optional, tag="2")]
     pub validator_set: ::std::option::Option<super::super::tendermint::types::ValidatorSet>,
-    #[prost(uint64, tag="3")]
-    pub trusted_height: u64,
+    #[prost(message, optional, tag="3")]
+    pub trusted_height: ::std::option::Option<super::client::Height>,
     #[prost(message, optional, tag="4")]
     pub trusted_validators: ::std::option::Option<super::super::tendermint::types::ValidatorSet>,
 }
@@ -85,44 +85,4 @@ pub struct Fraction {
     pub numerator: i64,
     #[prost(int64, tag="2")]
     pub denominator: i64,
-}
-/// MsgCreateClient defines a message to create a tendermint client.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateClient {
-    #[prost(string, tag="1")]
-    pub client_id: std::string::String,
-    #[prost(message, optional, tag="2")]
-    pub header: ::std::option::Option<Header>,
-    #[prost(message, optional, tag="3")]
-    pub trust_level: ::std::option::Option<Fraction>,
-    #[prost(message, optional, tag="4")]
-    pub trusting_period: ::std::option::Option<::prost_types::Duration>,
-    #[prost(message, optional, tag="5")]
-    pub unbonding_period: ::std::option::Option<::prost_types::Duration>,
-    #[prost(message, optional, tag="6")]
-    pub max_clock_drift: ::std::option::Option<::prost_types::Duration>,
-    #[prost(message, repeated, tag="8")]
-    pub proof_specs: ::std::vec::Vec<super::super::ics23::ProofSpec>,
-    #[prost(bytes, tag="7")]
-    pub signer: std::vec::Vec<u8>,
-}
-/// MsgCreateClient defines an sdk.Msg to update a tendermint client state to
-/// the given header.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUpdateClient {
-    #[prost(string, tag="1")]
-    pub client_id: std::string::String,
-    #[prost(message, optional, tag="2")]
-    pub header: ::std::option::Option<Header>,
-    #[prost(bytes, tag="3")]
-    pub signer: std::vec::Vec<u8>,
-}
-/// MsgSubmitClientMisbehaviour defines an sdk.Msg type that submits Evidence for
-/// light client misbehaviour.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSubmitClientMisbehaviour {
-    #[prost(message, optional, tag="1")]
-    pub evidence: ::std::option::Option<Evidence>,
-    #[prost(bytes, tag="2")]
-    pub submitter: std::vec::Vec<u8>,
 }
