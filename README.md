@@ -1,3 +1,7 @@
+
+# ARCHIVED REPOSITORY
+Please see the [ibc-rs](https://github.com/informalsystems/ibc-rs/) repository for updated code.
+
 ## ibc-proto
 
 [![Crate][crate-image]][crate-link]
